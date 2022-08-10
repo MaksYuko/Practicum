@@ -1,0 +1,60 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"math/rand"
+	"os"
+	"time"
+)
+
+//игра, где игрок должен отгадать случайное число
+
+import (
+	"log"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	second := time.Now().Unix()
+	rand.Seed(second)
+	target := rand.Intn(100) + 1
+
+	fmt.Println(" I've chosen a random number between 1 and 100.")
+	fmt.Println("Can you guess it?")
+
+	reader := bufio.NewReader(os.Stdin)
+
+	succes := false
+
+	for guus := 0; guus < 10; guus++ {
+		fmt.Println("You have", 10-guus, "guss left")
+
+		fmt.Print("Make a guess: ")
+		input, oror := reader.ReadString('\n')
+		if oror != nil {
+			log.Fatal(oror)
+		}
+
+		input = strings.TrimSpace(input)
+		quess, oror := strconv.Atoi(input)
+		if oror != nil {
+			log.Fatal(oror)
+		}
+		if quess < target {
+			fmt.Println("Oops.Your guess was LOW.")
+		} else if quess > target {
+			fmt.Println("Oops. Your guess was HIGH.")
+		} else {
+			succes = true
+			fmt.Println("Good job! You guessed it!")
+			break
+
+		}
+
+	}
+	if !succes {
+		fmt.Println("Sorry, you didn't guess my number. It was:", target)
+	}
+}
